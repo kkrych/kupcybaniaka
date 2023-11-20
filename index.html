@@ -23,85 +23,112 @@ tr:nth-child(even) {
 
 <h1>Kupcy Baniaka</h1>
 
+<button id="generate_button">Generuj</button>
+
 <h2> Kupiec oferuje</h2>
 <table>
   <tr>
     <th>Towar</th>
-    <th>Cena</th>
-    <th>Dostępność</th>
+    <th>Cena (za sztukę)</th>
+    <th>Dostępność (w sztukach)</th>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="s0_name"></td>
+    <td id="s0_price"></td>
+    <td id="s0_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="s1_name"></td>
+    <td id="s1_price"></td>
+    <td id="s1_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="s2_name"></td>
+    <td id="s2_price"></td>
+    <td id="s2_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="s3_name"></td>
+    <td id="s3_price"></td>
+    <td id="s3_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="s4_name"></td>
+    <td id="s4_price"></td>
+    <td id="s4_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="s5_name"></td>
+    <td id="s5_price"></td>
+    <td id="s5_quantity"></td>
   </tr>
+
 </table>
 
 <h2>Kupiec chce kupić</h2>
 <table>
   <tr>
     <th>Towar</th>
-    <th>Cena (maksymalna)</th>
-    <th>Ilość</th>
+    <th>Cena (maksymalna za sztukę)</th>
+    <th>Ilość (w sztukach)</th>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="b0_name"></td>
+    <td id="b0_price"></td>
+    <td id="b0_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="b1_name"></td>
+    <td id="b1_price"></td>
+    <td id="b1_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="b2_name"></td>
+    <td id="b2_price"></td>
+    <td id="b2_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="b3_name"></td>
+    <td id="b3_price"></td>
+    <td id="b3_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="b4_name"></td>
+    <td id="b4_price"></td>
+    <td id="b4_quantity"></td>
   </tr>
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td id="b5_name"></td>
+    <td id="b5_price"></td>
+    <td id="b5_quantity"></td>
   </tr>
 </table>
 
 </body>
+<script>
+  const callMerchantApi = async () => {
+    console.log("pobiera");
+    const response = await fetch('https://karolkrych.pythonanywhere.com/');
+    const myJson = await response.json(); //extract JSON from the http response
+    // do something with myJson
+    console.log(myJson);
+
+    for (let i = 0; i < 6; i++){
+      document.getElementById("s"+i+"_name").textContent = myJson.for_sell[i].name;
+      document.getElementById("s"+i+"_price").textContent = myJson.for_sell[i].price;
+      document.getElementById("s"+i+"_quantity").textContent = myJson.for_sell[i].quantity;
+    }
+
+    for (let i = 0; i < 6; i++){
+      document.getElementById("b"+i+"_name").textContent = myJson.buy_offers[i].name;
+      document.getElementById("b"+i+"_price").textContent = myJson.buy_offers[i].price;
+      document.getElementById("b"+i+"_quantity").textContent = myJson.buy_offers[i].quantity;
+    }
+  }
+
+  document.getElementById("generate_button").addEventListener("click", callMerchantApi);
+
+</script>
 </html>
 
 
