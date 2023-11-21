@@ -111,9 +111,14 @@ tr:nth-child(even) {
     const response = await fetch(
             'https://karolkrych.pythonanywhere.com/',
             {
-              mode: "no-cors"
+              headers: {
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "https://karolkrych.pythonanywhere.com",
+              }
             }
     );
+    console.log(response)
+
     const myJson = await response.json(); //extract JSON from the http response
     // do something with myJson
     console.log(myJson);
