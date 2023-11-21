@@ -124,8 +124,9 @@ tr:nth-child(even) {
     console.log(myJson);
 
     for (let i = 0; i < 6; i++){
+      let price = myJson.for_sell[i].real_price + "(" + myJson.for_sell[i].market_price + myJson.for_sell[i].modifier_display + ")";
       document.getElementById("s"+i+"_name").textContent = myJson.for_sell[i].name;
-      document.getElementById("s"+i+"_price").textContent = myJson.for_sell[i].price;
+      document.getElementById("s"+i+"_price").textContent = price;
       document.getElementById("s"+i+"_quantity").textContent = myJson.for_sell[i].quantity;
     }
 
