@@ -108,7 +108,12 @@ tr:nth-child(even) {
 <script>
   const callMerchantApi = async () => {
     console.log("pobiera");
-    const response = await fetch('https://karolkrych.pythonanywhere.com/');
+    const response = await fetch(
+            'https://karolkrych.pythonanywhere.com/',
+            {
+              mode: "cors"
+            }
+    );
     const myJson = await response.json(); //extract JSON from the http response
     // do something with myJson
     console.log(myJson);
