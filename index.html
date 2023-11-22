@@ -29,36 +29,43 @@ tr:nth-child(even) {
 <table>
   <tr>
     <th>Towar</th>
-    <th>Cena (za sztukę)</th>
+    <th>Cena rynkowa (za sztukę)</th>
+    <th>Cena rzeczywista (za sztukę)</th>
     <th>Dostępność (w sztukach)</th>
   </tr>
   <tr>
     <td id="s0_name"></td>
+    <td id="s0_market_price"></td>
     <td id="s0_price"></td>
     <td id="s0_quantity"></td>
   </tr>
   <tr>
     <td id="s1_name"></td>
+    <td id="s1_market_price"></td>
     <td id="s1_price"></td>
     <td id="s1_quantity"></td>
   </tr>
   <tr>
     <td id="s2_name"></td>
+    <td id="s2_market_price"></td>
     <td id="s2_price"></td>
     <td id="s2_quantity"></td>
   </tr>
   <tr>
     <td id="s3_name"></td>
+    <td id="s3_market_price"></td>
     <td id="s3_price"></td>
     <td id="s3_quantity"></td>
   </tr>
   <tr>
     <td id="s4_name"></td>
+    <td id="s4_market_price"></td>
     <td id="s4_price"></td>
     <td id="s4_quantity"></td>
   </tr>
   <tr>
     <td id="s5_name"></td>
+    <td id="s5_market_price"></td>
     <td id="s5_price"></td>
     <td id="s5_quantity"></td>
   </tr>
@@ -69,36 +76,43 @@ tr:nth-child(even) {
 <table>
   <tr>
     <th>Towar</th>
-    <th>Cena (maksymalna za sztukę)</th>
+    <th>Cena rynkowa (maksymalna za sztukę)</th>
+    <th>Cena rzeczywista (maksymalna za sztukę)</th>
     <th>Ilość (w sztukach)</th>
   </tr>
   <tr>
     <td id="b0_name"></td>
+    <td id="b0_market_price"></td>
     <td id="b0_price"></td>
     <td id="b0_quantity"></td>
   </tr>
   <tr>
     <td id="b1_name"></td>
+    <td id="b1_market_price"></td>
     <td id="b1_price"></td>
     <td id="b1_quantity"></td>
   </tr>
   <tr>
     <td id="b2_name"></td>
+    <td id="b2_market_price"></td>
     <td id="b2_price"></td>
     <td id="b2_quantity"></td>
   </tr>
   <tr>
     <td id="b3_name"></td>
+    <td id="b3_market_price"></td>
     <td id="b3_price"></td>
     <td id="b3_quantity"></td>
   </tr>
   <tr>
     <td id="b4_name"></td>
+    <td id="b4_market_price"></td>
     <td id="b4_price"></td>
     <td id="b4_quantity"></td>
   </tr>
   <tr>
     <td id="b5_name"></td>
+    <td id="b5_market_price"></td>
     <td id="b5_price"></td>
     <td id="b5_quantity"></td>
   </tr>
@@ -124,16 +138,18 @@ tr:nth-child(even) {
     console.log(myJson);
 
     for (let i = 0; i < 6; i++){
-      let price = myJson.for_sell[i].real_price + " (" + myJson.for_sell[i].market_price + myJson.for_sell[i].modifier_display + ")";
+      let price = myJson.for_sell[i].real_price + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
       document.getElementById("s"+i+"_name").textContent = myJson.for_sell[i].name;
-      document.getElementById("s"+i+"_price").textContent = price;
+      document.getElementById("s"+i+"_market_price").textContent = myJson.for_sell[i].market_price;
+      document.getElementById("s"+i+"_price").innerHTML = price;
       document.getElementById("s"+i+"_quantity").textContent = myJson.for_sell[i].quantity;
     }
 
     for (let i = 0; i < 6; i++){
-      let price = myJson.for_sell[i].real_price + " (" + myJson.for_sell[i].market_price + myJson.for_sell[i].modifier_display + ")";
+      let price = myJson.for_sell[i].real_price + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
       document.getElementById("b"+i+"_name").textContent = myJson.buy_offers[i].name;
-      document.getElementById("b"+i+"_price").textContent = price;
+      document.getElementById("b"+i+"_market_price").textContent = myJson.buy_offers[i].market_price;
+      document.getElementById("b"+i+"_price").innerHTML = price;
       document.getElementById("b"+i+"_quantity").textContent = myJson.buy_offers[i].quantity;
     }
   }
