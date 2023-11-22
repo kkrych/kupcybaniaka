@@ -187,7 +187,13 @@ tr:nth-child(even) {
       document.getElementById("b" + i + "_market_price").textContent = myJson.buy_offers[i].market_price;
       document.getElementById("b" + i + "_price").innerHTML = price;
       document.getElementById("b" + i + "_quantity").textContent = myJson.buy_offers[i].quantity;
-    }
+
+      document.getElementById("b" + i + "_name").addEventListener("click", function () {
+        document.getElementById("calculator_item_name").textContent = document.getElementById("b" + i + "_name").textContent;
+        document.getElementById("calculator_price_display").textContent = document.getElementById("b" + i + "_real_price").textContent;
+        document.getElementById("calculator_quantity").value = '0';
+        document.getElementById("total").textContent = '0';
+    })
   }
 
   document.getElementById("generate_button").addEventListener("click", callMerchantApi);
@@ -195,7 +201,7 @@ tr:nth-child(even) {
   // calculator
   $(document).ready(function() {
   $(".checkout").on("input", ".quantity", function() {
-    var price = +parseInt($("#calculator_price_display")[0].innerText);
+    var price = +parseFloat($("#calculator_price_display")[0].innerText);
     var quantity = +$(this).val();
     $("#total").text(price * quantity + "");
   })
