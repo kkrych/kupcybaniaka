@@ -17,13 +17,24 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.action_button{
+    display:inline-block;
+    width: 80px;
+    height: 40px;
+}
 </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 
 <h1>Kupcy Baniaka</h1>
 
-<button id="generate_button">Generuj</button>
+<button id="generate_button">Generuj</button><br><br>
+
+
+<span>Gotówka kupca: <span id="merchant_cash"></span></span>
+
 
 <h2> Kupiec oferuje</h2>
 <table>
@@ -118,10 +129,27 @@ tr:nth-child(even) {
   </tr>
 </table>
 
+<h2>Kalkulator</h2>
+<div class="checkout">
+  <p class="description">Towar: <span id="calculator_item_name"></span></p>
+  <p class="description">Cena: <span id="calculator_price_display">3</span></p>
+  <p class="description">Ilość:</p>
+  <button type="button" class="decrease-btn">-</button>
+  <input type="text" class="quantity" id="calculator_quantity" value="0">
+  <button type="button" class="increase-btn">+</button>
+  <p class="total">Cena: <span id="total">0</span></p>
+</div>
+
 </body>
 <script>
+
+  function randomIntFromInterval(min, max) { // min and max included
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+
   const callMerchantApi = async () => {
-    console.log("pobiera");
+    document.getElementById("merchant_cash").textContent = randomIntFromInterval(500, 2000) + "";
+
     const response = await fetch(
             'https://karolkrych.pythonanywhere.com/',
             {
@@ -131,30 +159,60 @@ tr:nth-child(even) {
               }
             }
     );
-    console.log(response)
+
+
 
     const myJson = await response.json(); //extract JSON from the http response
     // do something with myJson
-    console.log(myJson);
 
-    for (let i = 0; i < 6; i++){
-      let price = myJson.for_sell[i].real_price + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
-      document.getElementById("s"+i+"_name").textContent = myJson.for_sell[i].name;
-      document.getElementById("s"+i+"_market_price").textContent = myJson.for_sell[i].market_price;
-      document.getElementById("s"+i+"_price").innerHTML = price;
-      document.getElementById("s"+i+"_quantity").textContent = myJson.for_sell[i].quantity;
+    for (let i = 0; i < 6; i++) {
+      let price = "<span id=\"s" + i + "_real_price\">" + myJson.for_sell[i].real_price + "</span>" + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
+      document.getElementById("s" + i + "_name").textContent = myJson.for_sell[i].name;
+      document.getElementById("s" + i + "_market_price").textContent = myJson.for_sell[i].market_price;
+      document.getElementById("s" + i + "_price").innerHTML = price;
+      document.getElementById("s" + i + "_quantity").textContent = myJson.for_sell[i].quantity;
+
+      document.getElementById("s" + i + "_name").addEventListener("click", function () {
+        document.getElementById("calculator_item_name").textContent = document.getElementById("s" + i + "_name").textContent;
+        document.getElementById("calculator_price_display").textContent = document.getElementById("s" + i + "_real_price").textContent;
+        document.getElementById("calculator_quantity").value = '0';
+        document.getElementById("total").textContent = '0';
+      })
+
     }
 
-    for (let i = 0; i < 6; i++){
-      let price = myJson.for_sell[i].real_price + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
-      document.getElementById("b"+i+"_name").textContent = myJson.buy_offers[i].name;
-      document.getElementById("b"+i+"_market_price").textContent = myJson.buy_offers[i].market_price;
-      document.getElementById("b"+i+"_price").innerHTML = price;
-      document.getElementById("b"+i+"_quantity").textContent = myJson.buy_offers[i].quantity;
+    for (let i = 0; i < 6; i++) {
+      let price = "<span id=\"b" + i + "_real_price\">" + myJson.for_sell[i].real_price + "</span>" + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
+      document.getElementById("b" + i + "_name").textContent = myJson.buy_offers[i].name;
+      document.getElementById("b" + i + "_market_price").textContent = myJson.buy_offers[i].market_price;
+      document.getElementById("b" + i + "_price").innerHTML = price;
+      document.getElementById("b" + i + "_quantity").textContent = myJson.buy_offers[i].quantity;
     }
   }
 
   document.getElementById("generate_button").addEventListener("click", callMerchantApi);
+
+  // calculator
+  $(document).ready(function() {
+  $(".checkout").on("input", ".quantity", function() {
+    var price = +parseInt($("#calculator_price_display")[0].innerText);
+    var quantity = +$(this).val();
+    $("#total").text(price * quantity + "");
+  })
+
+  var $buttonPlus = $('.increase-btn');
+  var $buttonMin = $('.decrease-btn');
+  var $quantity = $('.quantity');
+
+  /*For plus and minus buttons*/
+  $buttonPlus.click(function() {
+    $quantity.val(parseInt($quantity.val()) + 1).trigger('input');
+  });
+
+  $buttonMin.click(function() {
+    $quantity.val(Math.max(parseInt($quantity.val()) - 1, 0)).trigger('input');
+  });
+})
 
 </script>
 </html>
