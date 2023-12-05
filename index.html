@@ -43,42 +43,56 @@ tr:nth-child(even) {
     <th>Cena rynkowa (za sztukę)</th>
     <th>Cena rzeczywista (za sztukę)</th>
     <th>Dostępność (w sztukach)</th>
+    <th>Transakcja</th>
   </tr>
   <tr>
     <td id="s0_name"></td>
     <td id="s0_market_price"></td>
     <td id="s0_price"></td>
     <td id="s0_quantity"></td>
+    <td id="s0_transaction"></td>
   </tr>
   <tr>
     <td id="s1_name"></td>
     <td id="s1_market_price"></td>
     <td id="s1_price"></td>
     <td id="s1_quantity"></td>
+    <td id="s1_transaction"></td>
   </tr>
   <tr>
     <td id="s2_name"></td>
     <td id="s2_market_price"></td>
     <td id="s2_price"></td>
     <td id="s2_quantity"></td>
+    <td id="s2_transaction"></td>
   </tr>
   <tr>
     <td id="s3_name"></td>
     <td id="s3_market_price"></td>
     <td id="s3_price"></td>
     <td id="s3_quantity"></td>
+    <td id="s3_transaction"></td>
   </tr>
   <tr>
     <td id="s4_name"></td>
     <td id="s4_market_price"></td>
     <td id="s4_price"></td>
     <td id="s4_quantity"></td>
+    <td id="s4_transaction"></td>
   </tr>
   <tr>
     <td id="s5_name"></td>
     <td id="s5_market_price"></td>
     <td id="s5_price"></td>
     <td id="s5_quantity"></td>
+    <td id="s5_transaction"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><strong>Suma</strong></td>
+    <td><input type="text" id="s_sum" value="0"></td>
   </tr>
 
 </table>
@@ -90,42 +104,56 @@ tr:nth-child(even) {
     <th>Cena rynkowa (maksymalna za sztukę)</th>
     <th>Cena rzeczywista (maksymalna za sztukę)</th>
     <th>Ilość (w sztukach)</th>
+    <th>Transakcja</th>
   </tr>
   <tr>
     <td id="b0_name"></td>
     <td id="b0_market_price"></td>
     <td id="b0_price"></td>
     <td id="b0_quantity"></td>
+    <td id="b0_transaction"></td>
   </tr>
   <tr>
     <td id="b1_name"></td>
     <td id="b1_market_price"></td>
     <td id="b1_price"></td>
     <td id="b1_quantity"></td>
+    <td id="b1_transaction"></td>
   </tr>
   <tr>
     <td id="b2_name"></td>
     <td id="b2_market_price"></td>
     <td id="b2_price"></td>
     <td id="b2_quantity"></td>
+    <td id="b2_transaction"></td>
   </tr>
   <tr>
     <td id="b3_name"></td>
     <td id="b3_market_price"></td>
     <td id="b3_price"></td>
     <td id="b3_quantity"></td>
+    <td id="b3_transaction"></td>
   </tr>
   <tr>
     <td id="b4_name"></td>
     <td id="b4_market_price"></td>
     <td id="b4_price"></td>
     <td id="b4_quantity"></td>
+    <td id="b4_transaction"></td>
   </tr>
   <tr>
     <td id="b5_name"></td>
     <td id="b5_market_price"></td>
     <td id="b5_price"></td>
     <td id="b5_quantity"></td>
+    <td id="b5_transaction"></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><strong>Suma</strong></td>
+    <td><input type="text" id="b_sum" value="0"></td>
   </tr>
 </table>
 
@@ -149,6 +177,84 @@ tr:nth-child(even) {
 
   const callMerchantApi = async () => {
     document.getElementById("merchant_cash").textContent = randomIntFromInterval(500, 2000) + "";
+
+    for (let i = 0; i < 6; i++){
+      // logic for calculators
+        // merchant sells
+        var calulatorForm = "<div class=\"checkout_s_"+i+"\"><button type=\"button\" class=\"decrease-btn_s_"+i+"\">-</button><input type=\"text\" class=\"quantity quantity_s_"+i+"\" id=\"calculator_quantity_s_"+i+"\" value=\"0\"><button type=\"button\" class=\"increase-btn_s_"+i+"\">+</button>";
+        document.getElementById("s" + i + "_transaction").innerHTML = calulatorForm;
+
+
+        /*For plus and minus buttons*/
+        $('.increase-btn_s_'+i).click(function() {
+          $('.quantity_s_'+i).val(parseInt($('.quantity_s_'+i).val()) + 1).trigger('input');
+          $("#s_sum").val(countSellValue());
+        });
+
+        $('.decrease-btn_s_'+i).click(function() {
+          $('.quantity_s_'+i).val(Math.max(parseInt($('.quantity_s_'+i).val()) - 1, 0)).trigger('input');
+          $("#s_sum").val(countSellValue());
+        });
+
+        $('.quantity_s_'+i).on("keyup keypress blur change", function() {
+          $("#s_sum").val(countSellValue());
+        });
+
+        // merchant buys
+        var calulatorForm = "<div class=\"checkout_b_"+i+"\"><button type=\"button\" class=\"decrease-btn_b_"+i+"\">-</button><input type=\"text\" class=\"quantity quantity_b_"+i+"\" id=\"calculator_quantity_b_"+i+"\" value=\"0\"><button type=\"button\" class=\"increase-btn_b_"+i+"\">+</button>";
+        document.getElementById("b" + i + "_transaction").innerHTML = calulatorForm;
+
+        /*For plus and minus buttons*/
+        $('.increase-btn_b_'+i).click(function() {
+          $('.quantity_b_'+i).val(parseInt($('.quantity_b_'+i).val()) + 1).trigger('input');
+          $("#b_sum").val(countBuyValue());
+        });
+
+        $('.decrease-btn_b_'+i).click(function() {
+          $('.quantity_b_'+i).val(Math.max(parseInt($('.quantity_b_'+i).val()) - 1, 0)).trigger('input');
+          $("#b_sum").val(countBuyValue());
+        });
+
+        $('.quantity_b_'+i).on("keyup keypress blur change", function() {
+          $("#b_sum").val(countBuyValue());
+        });
+
+          function countSellValue() {
+              var sum = 0;
+              for (var x = 0; x < 6; x++){
+                sum += parseFloat($('.quantity_s_'+x).val()) * parseFloat($("s" + x + "_real_price").val());
+              }
+              return sum;
+          }
+
+          function countBuyValue() {
+              var sum = 0;
+              for (var x = 0; x < 6; x++){
+                sum += parseFloat($('.quantity_b_'+x).val()) * parseFloat($("b" + x + "_real_price").val());
+              }
+              return sum;
+          }
+    }
+
+      var elements = document.getElementsByClassName("quantity");
+
+      var myFunction = function() {
+
+          console.log('asdsadad');
+      };
+
+      for (var i = 0; i < elements.length; i++) { // todo to nie chce dzialac z "change" a z "click" dziala ladnie
+          elements[i].addEventListener("change", myFunction, false);
+      }
+
+      // $(".quantity").on("change", function() {
+      //   var sum = 10;
+      //   $("#b_sum").val(sum);
+      // });
+
+      // POTENCJALNE ROZWIAZANIE - dac eventlistenery na "change" inputu + na "click" przyciskow plus i minus - powinno zatrybic
+
+
 
     const response = await fetch(
             'https://karolkrych.pythonanywhere.com/',
@@ -179,6 +285,8 @@ tr:nth-child(even) {
         document.getElementById("total").textContent = '0';
       });
 
+
+
     }
 
     for (let i = 0; i < 6; i++) {
@@ -199,6 +307,9 @@ tr:nth-child(even) {
   }
 
   document.getElementById("generate_button").addEventListener("click", callMerchantApi);
+
+
+  var calulatorForm = "<div class=\"checkout\"><button type=\"button\" class=\"decrease-btn\">-</button><input type=\"text\" class=\"quantity\" id=\"calculator_quantity\" value=\"0\"><button type=\"button\" class=\"increase-btn\">+</button>";
 
   // calculator
   $(document).ready(function() {
