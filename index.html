@@ -33,7 +33,7 @@ tr:nth-child(even) {
 <button id="generate_button">Generuj</button><br><br>
 
 
-<span>Gotówka kupca: <span id="merchant_cash"></span></span>
+<span>Gotówka kupca: <span id="merchant_cash">0</span> <strong><span id="merchant_cash_modifier">+0</span></strong> </span>
 
 
 <h2> Kupiec oferuje</h2>
@@ -178,6 +178,7 @@ tr:nth-child(even) {
         $('.increase-btn_s_'+i).click(function() {
           $('.quantity_s_'+i).val(parseInt($('.quantity_s_'+i).val()) + 1).trigger('input');
           $("#s_sum").val(countSellValue());
+
         });
 
         $('.decrease-btn_s_'+i).click(function() {
@@ -207,6 +208,13 @@ tr:nth-child(even) {
         $('.quantity_b_'+i).on("keyup keypress blur change", function() {
           $("#b_sum").val(countBuyValue());
         });
+
+
+          function updateMerchantCashModifier() {
+            var modifier = parseFloat($("#s_sum").val()) - parseFloat($("#b_sum").val());
+            if (modifier >= 0) { modifier = '+' + modifier }
+            $("#merchant_cash_modifier").innerHTML(modifier);
+          }
 
           function countSellValue() {
               var sum = 0;
