@@ -178,16 +178,18 @@ tr:nth-child(even) {
         $('.increase-btn_s_'+i).click(function() {
           $('.quantity_s_'+i).val(parseInt($('.quantity_s_'+i).val()) + 1).trigger('input');
           $("#s_sum").val(countSellValue());
-
+          updateMerchantCashModifier();
         });
 
         $('.decrease-btn_s_'+i).click(function() {
           $('.quantity_s_'+i).val(Math.max(parseInt($('.quantity_s_'+i).val()) - 1, 0)).trigger('input');
           $("#s_sum").val(countSellValue());
+          updateMerchantCashModifier();
         });
 
         $('.quantity_s_'+i).on("keyup keypress blur change", function() {
           $("#s_sum").val(countSellValue());
+          updateMerchantCashModifier();
         });
 
         // merchant buys
@@ -198,22 +200,25 @@ tr:nth-child(even) {
         $('.increase-btn_b_'+i).click(function() {
           $('.quantity_b_'+i).val(parseInt($('.quantity_b_'+i).val()) + 1).trigger('input');
           $("#b_sum").val(countBuyValue());
+          updateMerchantCashModifier();
         });
 
         $('.decrease-btn_b_'+i).click(function() {
           $('.quantity_b_'+i).val(Math.max(parseInt($('.quantity_b_'+i).val()) - 1, 0)).trigger('input');
           $("#b_sum").val(countBuyValue());
+          updateMerchantCashModifier();
         });
 
         $('.quantity_b_'+i).on("keyup keypress blur change", function() {
           $("#b_sum").val(countBuyValue());
+          updateMerchantCashModifier();
         });
 
 
           function updateMerchantCashModifier() {
             var modifier = parseFloat($("#s_sum").val()) - parseFloat($("#b_sum").val());
             if (modifier >= 0) { modifier = '+' + modifier }
-            $("#merchant_cash_modifier").innerHTML(modifier);
+            $("#merchant_cash_modifier")[0].innerText = modifier;
           }
 
           function countSellValue() {
