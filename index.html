@@ -222,7 +222,7 @@ tr:nth-child(even) {
           function countSellValue() {
               var sum = 0;
               for (var x = 0; x < 6; x++){
-                sum += parseFloat($('.quantity_s_'+x).val()) * parseFloat($("s" + x + "_real_price").val());
+                sum += parseFloat($('.quantity_s_'+x).val()) * parseFloat($("#s" + x + "_real_price")[0].innerText);
               }
               return sum;
           }
@@ -230,7 +230,7 @@ tr:nth-child(even) {
           function countBuyValue() {
               var sum = 0;
               for (var x = 0; x < 6; x++){
-                sum += parseFloat($('.quantity_b_'+x).val()) * parseFloat($("b" + x + "_real_price").val());
+                sum += parseFloat($('.quantity_b_'+x).val()) * parseFloat($("#b" + x + "_real_price")[0].innerText);
               }
               return sum;
           }
