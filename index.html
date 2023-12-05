@@ -272,7 +272,7 @@ tr:nth-child(even) {
     }
 
     for (let i = 0; i < 6; i++) {
-      let price = "<span id=\"b" + i + "_real_price\">" + myJson.for_sell[i].real_price + "</span>" + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
+      let price = "<span id=\"b" + i + "_real_price\">" + myJson.buy_offers[i].real_price + "</span>" + " (" + myJson.buy_offers[i].market_price + " <b>" + myJson.buy_offers[i].modifier_display + "</b>)";
       document.getElementById("b" + i + "_name").textContent = myJson.buy_offers[i].name;
       document.getElementById("b" + i + "_market_price").textContent = myJson.buy_offers[i].market_price;
       document.getElementById("b" + i + "_price").innerHTML = price;
