@@ -239,7 +239,14 @@ tr:nth-child(even) {
           function countBuyValue() {
               var sum = 0;
               for (var x = 0; x < 6; x++){
-                sum += parseFloat($('.quantity_b_'+x).val()) * parseFloat($("#b" + x + "_real_price")[0].innerText);
+                var price_unit = $("#b" + x + "_market_price")[0].innerText.slice(-2);
+                var item_price = parseFloat($('.quantity_b_'+x).val()) * parseFloat($("#b" + x + "_real_price")[0].innerText);
+
+                if (price_unit === "ss"){
+                  item_price = item_price / 20;
+                }
+
+                sum += item_price;
               }
               return (sum).toFixed(2);
           }
