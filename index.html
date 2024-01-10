@@ -254,9 +254,11 @@ tr:nth-child(even) {
     // do something with myJson
 
     for (let i = 0; i < 6; i++) {
+      let market_price = "<span id=\"s" + i + "_real_market_price\">" + myJson.for_sell[i].market_price + "</span>" + myJson.for_sell[i].price_unit;
       let price = "<span id=\"s" + i + "_real_price\">" + myJson.for_sell[i].real_price + "</span>" + " (" + myJson.for_sell[i].market_price + " <b>" + myJson.for_sell[i].modifier_display + "</b>)";
+
       document.getElementById("s" + i + "_name").textContent = myJson.for_sell[i].name;
-      document.getElementById("s" + i + "_market_price").textContent = myJson.for_sell[i].market_price;
+      document.getElementById("s" + i + "_market_price").textContent = market_price;
       document.getElementById("s" + i + "_price").innerHTML = price;
       document.getElementById("s" + i + "_quantity").textContent = myJson.for_sell[i].quantity;
 
@@ -272,9 +274,11 @@ tr:nth-child(even) {
     }
 
     for (let i = 0; i < 6; i++) {
+      let market_price = "<span id=\"s" + i + "_real_market_price\">" + myJson.buy_offers[i].market_price + "</span>" + myJson.buy_offers[i].price_unit;
       let price = "<span id=\"b" + i + "_real_price\">" + myJson.buy_offers[i].real_price + "</span>" + " (" + myJson.buy_offers[i].market_price + " <b>" + myJson.buy_offers[i].modifier_display + "</b>)";
+
       document.getElementById("b" + i + "_name").textContent = myJson.buy_offers[i].name;
-      document.getElementById("b" + i + "_market_price").textContent = myJson.buy_offers[i].market_price;
+      document.getElementById("b" + i + "_market_price").textContent = market_price;
       document.getElementById("b" + i + "_price").innerHTML = price;
       document.getElementById("b" + i + "_quantity").textContent = myJson.buy_offers[i].quantity;
 
