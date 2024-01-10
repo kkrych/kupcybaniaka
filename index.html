@@ -216,9 +216,28 @@ tr:nth-child(even) {
 
 
           function updateMerchantCashModifier() {
-            var modifier = parseFloat($("#s_sum").val()) - parseFloat($("#b_sum").val());
-            if (modifier >= 0) { modifier = '+' + modifier }
-            $("#merchant_cash_modifier")[0].innerText = modifier;
+            return
+            // var modifier = parseFloat($("#s_sum").val()) - parseFloat($("#b_sum").val());
+            // if (modifier >= 0) { modifier = '+' + modifier }
+            // $("#merchant_cash_modifier")[0].innerText = modifier;
+          }
+
+          function countImperialCoins(amount) {
+              var golden_crowns = (amount).toFixed(2);
+              var shillings = parseFloat((golden_crowns % 1).toFixed(2));
+              golden_crowns = (golden_crowns - shillings).toFixed();
+              shillings = parseFloat((shillings * 20).toFixed(2));
+              var pens = parseFloat((shillings % 1).toFixed(2));
+              shillings = (shillings - pens).toFixed();
+              pens = (pens * 12).toFixed();
+
+              var return_value = '';
+
+              if (golden_crowns !== '0') return_value = return_value + golden_crowns + 'zk';
+              if (shillings !== '0') return_value = return_value + shillings + 'ss';
+              if (pens !== '0') return_value = return_value + pens + 'p';
+
+              return return_value;
           }
 
           function countSellValue() {
@@ -233,7 +252,8 @@ tr:nth-child(even) {
 
                 sum += item_price;
               }
-              return (sum).toFixed(2);
+
+              return countImperialCoins(sum);
           }
 
           function countBuyValue() {
@@ -248,7 +268,7 @@ tr:nth-child(even) {
 
                 sum += item_price;
               }
-              return (sum).toFixed(2);
+              return countImperialCoins(sum);
           }
     }
 
