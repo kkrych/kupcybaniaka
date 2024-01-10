@@ -311,7 +311,7 @@ tr:nth-child(even) {
       let market_price = "<span id=\"s" + i + "_real_market_price\">" + myJson.buy_offers[i].market_price + "</span>" + myJson.buy_offers[i].price_unit;
       let price = "<span id=\"b" + i + "_real_price\">" + myJson.buy_offers[i].real_price + "</span>" + " (" + myJson.buy_offers[i].market_price + " <b>" + myJson.buy_offers[i].modifier_display + "</b>)";
 
-      document.getElementById("b" + i + "_name").textContent = myJson.buy_offers[i].name + " (" + myJson.for_sell[i].unit + ") ";
+      document.getElementById("b" + i + "_name").textContent = myJson.buy_offers[i].name + " (" + myJson.buy_offers[i].unit + ") ";
       document.getElementById("b" + i + "_market_price").innerHTML = market_price;
       document.getElementById("b" + i + "_price").innerHTML = price;
       document.getElementById("b" + i + "_quantity").textContent = myJson.buy_offers[i].quantity;
