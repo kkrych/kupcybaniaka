@@ -214,14 +214,6 @@ tr:nth-child(even) {
           updateMerchantCashModifier();
         });
 
-
-          function updateMerchantCashModifier() {
-            return
-            // var modifier = parseFloat($("#s_sum").val()) - parseFloat($("#b_sum").val());
-            // if (modifier >= 0) { modifier = '+' + modifier }
-            // $("#merchant_cash_modifier")[0].innerText = modifier;
-          }
-
           function countImperialCoins(amount) {
               var golden_crowns = (amount).toFixed(2);
               var shillings = parseFloat((golden_crowns % 1).toFixed(2));
@@ -240,7 +232,7 @@ tr:nth-child(even) {
               return return_value;
           }
 
-          function countSellValue() {
+          function countSellRawValue() {
               var sum = 0;
               for (var x = 0; x < 6; x++){
                 var price_unit = $("#s" + x + "_market_price")[0].innerText.slice(-2);
@@ -253,10 +245,16 @@ tr:nth-child(even) {
                 sum += item_price;
               }
 
+              return sum;
+          }
+
+          function countSellValue() {
+              var sum = countSellRawValue();
+
               return countImperialCoins(sum);
           }
 
-          function countBuyValue() {
+          function countBuyRawValue() {
               var sum = 0;
               for (var x = 0; x < 6; x++){
                 var price_unit = $("#b" + x + "_market_price")[0].innerText.slice(-2);
@@ -268,8 +266,24 @@ tr:nth-child(even) {
 
                 sum += item_price;
               }
-              return countImperialCoins(sum);
+
+              return sum;
           }
+
+          function countBuyValue() {
+            var sum = countBuyRawValue()
+
+            return countImperialCoins(sum);
+          }
+
+          function updateMerchantCashModifier() {
+            var sell_sum = countSellRawValue();
+            var buy_sum = countBuyRawValue();
+
+            return countImperialCoins(sell_sum - buy_sum)
+
+          }
+
     }
 
     const response = await fetch(
