@@ -271,17 +271,20 @@ tr:nth-child(even) {
           }
 
           function countBuyValue() {
-            var sum = countBuyRawValue()
+              var sum = countBuyRawValue()
 
-            return countImperialCoins(sum);
+              return countImperialCoins(sum);
           }
 
           function updateMerchantCashModifier() {
-            var sell_sum = countSellRawValue();
-            var buy_sum = countBuyRawValue();
+              var sell_sum = countSellRawValue();
+              var buy_sum = countBuyRawValue();
 
-            return countImperialCoins(sell_sum - buy_sum)
+              var modifier = countImperialCoins(sell_sum - buy_sum);
 
+              if (sell_sum - buy_sum >= 0) { modifier = '+' + modifier }
+              else {modifier = '-' + modifier}
+              $("#merchant_cash_modifier")[0].innerText = modifier;
           }
 
     }
