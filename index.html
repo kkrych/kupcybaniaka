@@ -33,7 +33,8 @@ tr:nth-child(even) {
 <button id="generate_button">Generuj</button><br><br>
 
 
-<span>Gotówka kupca: <span id="merchant_cash">0</span> <strong><span id="merchant_cash_modifier">+0</span></strong> </span>
+<p><span>Gotówka kupca: <span id="merchant_cash">0</span> <strong><span id="merchant_cash_modifier">+0</span></strong> </span></p>
+<p><span>Waga towarów (w kg): <span id="total_weight">0</span></p>
 
 
 <h2> Kupiec oferuje</h2>
@@ -299,10 +300,12 @@ tr:nth-child(even) {
             }
     );
 
-
+    
 
     const myJson = await response.json(); //extract JSON from the http response
     // do something with myJson
+
+    document.getElementById("total_weight").textContent = myJson.total_weight;
 
     for (let i = 0; i < 6; i++) {
       let market_price = "<span id=\"s" + i + "_real_market_price\">" + myJson.for_sell[i].market_price + "</span>" + myJson.for_sell[i].price_unit;
